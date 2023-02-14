@@ -1,36 +1,29 @@
-import { Component } from 'react'
-import { Card } from 'react-bootstrap'
-// import CommentArea from './CommentArea'
+import { useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 
-class SingleBook extends Component {
-  // state = {
-  //   selected: false,
-  // }
+// Aggiornata da class a function!
+function SingleBook(props) {
+  const [selected, setSelected] = useState(false);
 
-  render() {
-    return (
-      <>
-        <Card
-          // onClick={() => this.setState({ selected: !this.state.selected })}
-          onClick={() => this.props.changeSelectedBook(this.props.book.asin)}
-          style={{
-            border:
-              this.props.selectedBook === this.props.book.asin
-                ? '3px solid red'
-                : 'none',
-          }}
-        >
-          <Card.Img variant="top" src={this.props.book.img} />
-          <Card.Body>
-            <Card.Title style={{ color: 'black' }}>
-              {this.props.book.title}
-            </Card.Title>
-          </Card.Body>
-        </Card>
-        {/* {this.state.selected && <CommentArea asin={this.props.book.asin} />} */}
-      </>
-    )
-  }
+  useEffect(() => {
+    setSelected(props.selectedBook === props.book.asin);
+  }, [props.selectedBook, props.book.asin]);
+
+  return (
+    <>
+      <Card
+        onClick={() => props.changeSelectedBook(props.book.asin)}
+        style={{
+          border: selected ? "3px solid red" : "none",
+        }}>
+        <Card.Img variant="top" src={props.book.img} />
+        <Card.Body>
+          <Card.Title style={{ color: "black" }}>{props.book.title}</Card.Title>
+        </Card.Body>
+      </Card>
+      {/* {selected && <CommentArea asin={props.book.asin} />} */}
+    </>
+  );
 }
 
-export default SingleBook
+export default SingleBook;
